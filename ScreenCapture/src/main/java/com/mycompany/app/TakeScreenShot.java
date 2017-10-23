@@ -36,7 +36,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
  *
  */
 
-public class TakeScreenShot {
+ class TakeScreenShot {
 
 	XWPFDocument docx;
 	String filename;
@@ -56,7 +56,6 @@ public class TakeScreenShot {
 
 		this.filename = file_name;
 		this.doc_format = "docx";
-
 		this.screenshot_name = "FullScreenshot";
 		this.image_format = "JPEG";
 		this.folder_name = file_name;
@@ -72,7 +71,7 @@ public class TakeScreenShot {
 			}
 
 		}
-		file_doc = new File(this.folder_name + "\\" + this.filename + "."
+		file_doc = new File(this.folder_name + "/" + this.filename + "."
 				+ doc_format);
 		if (!file_doc.exists()) {
 			System.out.println("\n docx does not exists");
@@ -92,13 +91,13 @@ public class TakeScreenShot {
 
 		} else {
 			this.docx = new XWPFDocument(OPCPackage.open(this.folder_name
-					+ "\\" + this.filename + "." + doc_format));
+					+ "/" + this.filename + "." + doc_format));
 			this.par = this.docx.createParagraph();
 			this.run = par.createRun();
 		}
 
 		try {
-			this.out = new FileOutputStream(this.folder_name + "\\"
+			this.out = new FileOutputStream(this.folder_name + "/"
 					+ this.filename + "." + doc_format, true);
 			
 		} catch (FileNotFoundException e) {
@@ -161,7 +160,7 @@ public class TakeScreenShot {
 				+ screenRect.x + " y : " + screenRect.y);
 		BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
 		ImageIO.write(screenFullImage, image_format, new File(this.folder_name
-				+ "\\" + fullname));
+				+ "/" + fullname));
 		return screenFullImage;
 
 	}
@@ -177,7 +176,7 @@ public class TakeScreenShot {
 		String fullname = screenshot_name + "_" + image_number + "."
 				+ image_format;
 		System.out.println("Screen name Full : " + fullname);
-		InputStream pic = new FileInputStream(folder_name + "\\" + fullname);
+		InputStream pic = new FileInputStream(folder_name + "/" + fullname);
 		if (!pic.equals(null)) {
 			run.setFontSize(13);
 			run.setBold(false);

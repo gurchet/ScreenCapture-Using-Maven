@@ -7,7 +7,12 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>my-app</name>
 	<url>http://maven.apache.org</url>
+	
+
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.scm/maven-scm-provider-tfs -->
+
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -31,24 +36,21 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/apache-log4j/log4j -->
 		<dependency>
-   			<groupId>log4j</groupId>
-   			<artifactId>log4j</artifactId>
-    		<version>1.2.17</version>
-</dependency>
-<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
-<dependency>
-    <groupId>dom4j</groupId>
-    <artifactId>dom4j</artifactId>
-    <version>1.6.1</version>
-</dependency>
-<!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
-<dependency>
-    <groupId>org.apache.xmlbeans</groupId>
-    <artifactId>xmlbeans</artifactId>
-    <version>2.6.0</version>
-</dependency>
-
-
-		
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.6.0</version>
+		</dependency>
 	</dependencies>
 </project>
