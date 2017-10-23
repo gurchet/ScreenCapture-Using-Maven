@@ -26,7 +26,7 @@ public class ConnectionToVisualStudio {
 	
 	public void connectToTFS() { 
 		System.out.println("Root Path :  " + ConnectionToVisualStudio.ROOTDIR);
-		System.setProperty("com.microsoft.tfs.jni.native.base-directory", ConnectionToVisualStudio.ROOTDIR + "/native");
+		System.setProperty("com.microsoft.tfs.jni.native.base-directory", ConnectionToVisualStudio.ROOTDIR + "/src/main/Resources/native");
 		System.out.println("com.microsoft.tfs.jni.native.base-directory Path :  "
 				+ System.getProperty("com.microsoft.tfs.jni.native.base-directory"));
 
@@ -142,7 +142,7 @@ public class ConnectionToVisualStudio {
 	}
 		
 	
-	public void saveWorkItem() {
+	public int saveWorkItem() {
 		
 		try {
 			newWorkItem.save();
@@ -154,6 +154,7 @@ public class ConnectionToVisualStudio {
 		}
 		cus_properties.saveProperties();
 		
+		return newWorkItem.getID();
 	}
 	
 	

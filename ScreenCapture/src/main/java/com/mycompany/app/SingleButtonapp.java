@@ -1,16 +1,13 @@
 package com.mycompany.app;
 
-import java.awt.AWTException; 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -19,14 +16,9 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -35,15 +27,17 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import tfs.ConnectionToVisualStudio;
 import tfs.Custom_Properties;
-
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 /**
  * @author Gurchet Singh The program provides the GUI for the Application having
@@ -285,14 +279,26 @@ public class SingleButtonapp {
 				final MyDialog dlg_Bug = new MyDialog(document_name);
 				dlg_Bug.setTitle(document_name);
 				JPanel panel = new JPanel(new GridBagLayout());
+
 				GridBagConstraints c = new GridBagConstraints();
+				Icon logoImage = new ImageIcon("./src/main/Resources/Images/wait.gif");
+			   final JLabel lblIcon = new JLabel(logoImage);
+			
+			//	lblIcon.setBounds(0, 0, 2, 2);
+
+				c.weightx = 0;
+				c.fill = GridBagConstraints.FIRST_LINE_START;
+				c.gridx = 0;
+				c.gridy = 0;
+				lblIcon.setVisible(false);
+				panel.add(lblIcon, c);
 
 				JLabel label1 = new JLabel();
 				label1.setText("Title : ");
 				c.weightx = 0;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 0;
-				c.gridy = 0;
+				c.gridy = 1;
 				c.anchor = GridBagConstraints.FIRST_LINE_START;
 				panel.add(label1, c);
 
@@ -301,8 +307,8 @@ public class SingleButtonapp {
 				c.weightx = 1;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 2;
-				c.gridy = 0;
-				c.gridwidth=1;
+				c.gridy = 1;
+				c.gridwidth = 1;
 				panel.add(text1, c);
 
 				JLabel label2 = new JLabel();
@@ -310,7 +316,7 @@ public class SingleButtonapp {
 				c.weightx = 0;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 0;
-				c.gridy = 1;
+				c.gridy = 2;
 				c.anchor = GridBagConstraints.FIRST_LINE_START;
 				panel.add(label2, c);
 
@@ -319,8 +325,8 @@ public class SingleButtonapp {
 				c.weightx = 1;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 2;
-				c.gridy = 1;
-				c.gridwidth=1;
+				c.gridy = 2;
+				c.gridwidth = 1;
 				panel.add(text2, c);
 
 				JLabel label3 = new JLabel();
@@ -328,7 +334,7 @@ public class SingleButtonapp {
 				c.weightx = 0;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 0;
-				c.gridy = 2;
+				c.gridy = 3;
 				c.anchor = GridBagConstraints.FIRST_LINE_START;
 				panel.add(label3, c);
 
@@ -337,8 +343,8 @@ public class SingleButtonapp {
 				c.weightx = 1;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 2;
-				c.gridy = 2;
-				c.gridwidth=1;
+				c.gridy = 3;
+				c.gridwidth = 1;
 				panel.add(text3, c);
 
 				JLabel label4 = new JLabel();
@@ -346,7 +352,7 @@ public class SingleButtonapp {
 				c.weightx = 0;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 0;
-				c.gridy = 3;
+				c.gridy = 4;
 				c.anchor = GridBagConstraints.FIRST_LINE_START;
 				panel.add(label4, c);
 
@@ -355,8 +361,8 @@ public class SingleButtonapp {
 				c.weightx = 1;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 2;
-				c.gridy = 3;
-				c.gridwidth=1;
+				c.gridy = 4;
+				c.gridwidth = 1;
 				panel.add(text4, c);
 
 				JLabel label5 = new JLabel();
@@ -364,31 +370,29 @@ public class SingleButtonapp {
 				c.weightx = 0;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 0;
-				c.gridy = 4;
+				c.gridy = 5;
 				c.anchor = GridBagConstraints.FIRST_LINE_START;
 				panel.add(label5, c);
 
-				final JTextArea textAreaStps = new JTextArea(30,30);
+				final JTextArea textAreaStps = new JTextArea(30, 30);
 				JScrollPane scrollPane = new JScrollPane(textAreaStps);
-				
+
 				textAreaStps.setWrapStyleWord(true);
 				textAreaStps.setLineWrap(true);
 				textAreaStps.setEditable(true);
 				textAreaStps.setFocusable(true);
 				textAreaStps.setRows(3);
 				textAreaStps.setText(cus_properties.getTfs_steps());
-			
-				//c.weightx = 1;
+
+				// c.weightx = 1;
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = 2;
-				c.gridy = 4;
-				//c.gridwidth=1;
-				//add(new JScrollPane(new JTextArea(50, 50)), BorderLayout.PAGE_START);
+				c.gridy = 5;
+				// c.gridwidth=1;
+				// add(new JScrollPane(new JTextArea(50, 50)), BorderLayout.PAGE_START);
 				textAreaStps.setPreferredSize(new Dimension(10, 5));
 				panel.add(textAreaStps, c);
-			
-		
-				
+
 				JButton btn_save = new JButton();
 				btn_save.setText("Create Bug");
 				c.weightx = 0;
@@ -397,53 +401,62 @@ public class SingleButtonapp {
 				c.gridy = 9;
 
 				panel.add(btn_save, c);
-				c.weightx = 0;
-				c.fill = GridBagConstraints.SOUTHWEST;
-				c.gridx = 0;
-				c.gridy = 10;
-			
+				
 
-			     
 				dlg_Bug.setBounds(0, 0, 800, 300);
 				dlg_Bug.add(panel, BorderLayout.CENTER);
-				//dlg_Bug.add(btn_save, BorderLayout.PAGE_END);
+				// dlg_Bug.add(btn_save, BorderLayout.PAGE_END);
 				dlg_Bug.setLocationRelativeTo(frm_main);
 				dlg_Bug.setVisible(true);
 				dlg_Bug.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
+			
 				btn_save.addActionListener(new ActionListener() {
-					
 					public void actionPerformed(ActionEvent e) {
+					
+						// {
+						        // I want a method of some sort here which is run before the main game
+						        // loop so I can set it up
+							  lblIcon.setVisible(true);
+						//    }
+				
+						///////////////////////////////////////////////////////// In
+						///////////////////////////////////////////////////////// construction///////////////////////
+						//Thread tr = new Thread();
+					
 						
-						/////////////////////////////////////////////////////////In construction///////////////////////
-						JFrame jf= new JFrame();
-						JPanel panle2=new JPanel();
-						Icon logoImage = new ImageIcon("./src/main/Resources/Images/Loading_icon.gif");
-						 final JLabel   lblIcon = new JLabel(logoImage); ;
-						 lblIcon.setBounds(9,1,5,5);
-						 GridBagConstraints c = new GridBagConstraints();
-						 c.weightx = 0;
-							c.fill = GridBagConstraints.SOUTHWEST;
-							c.gridx = 0;
-							c.gridy = 10;
-						 panle2.add(lblIcon,c);
-						 panle2.setBounds(9,1,5,5);
-						 panle2.setPreferredSize(new Dimension(20,20));
-						 jf.add(panle2);
-						 jf.setVisible(true);
-							//lblIcon.setVisible(false);
-						 JDialog jd= new JDialog();
-						   
-						 jd.setBounds(0, 0, 800, 300);
-						 jd.add(panle2, BorderLayout.CENTER);
+						// JFrame jf= new JFrame();
+						// JPanel panle2=new JPanel();
+						// Icon logoImage = new
+						// ImageIcon("./src/main/Resources/Images/Loading_icon.gif");
+						// final JLabel lblIcon = new JLabel(logoImage); ;
+						// lblIcon.setBounds(9,1,5,5);
+						// GridBagConstraints c = new GridBagConstraints();
+						// c.weightx = 0;
+						// c.fill = GridBagConstraints.SOUTHWEST;
+						// c.gridx = 0;
+						// c.gridy = 10;
+						// panel.add(lblIcon,c);
+						// panle2.setBounds(9,1,5,5);
+						// panle2.setPreferredSize(new Dimension(20,20));
+						// jf.add(panle2);
+						// jf.setVisible(true);
+						// lblIcon.setVisible(false);
+						// JDialog jd= new JDialog();
+						//
+						// jd.setBounds(0, 0, 800, 300);
+						// jd.add(panle2, BorderLayout.CENTER);
 						// jd.setLocation(50, 50);
-						 jd.setVisible(true);
-						 //jd.add(jf);
-						 
-						/////////////////////////////////////////////////////////In construction///////////////////////
+						// jd.setVisible(true);
+						// jd.add(jf);
 
-						 
-						dlg_Bug.setEnabled(false);
+						///////////////////////////////////////////////////////// In
+						///////////////////////////////////////////////////////// construction///////////////////////
+						 SwingWorker myWorker= new SwingWorker<String, Void>() {
+							    @Override
+							    protected String doInBackground() throws Exception {
+							        //Execute your logic
+							
+						//dlg_Bug.setEnabled(false);
 						takeScreenShot.closeFile();
 
 						String bugTitle = text1.getText();
@@ -478,23 +491,23 @@ public class SingleButtonapp {
 
 							tfs.areFieldsAvailable();
 
-							 //------------------addAreaPath-------------------------------------------------------
+							// ------------------addAreaPath-------------------------------------------------------
 
-							 tfs.addAreaPath(areaPath);
+							tfs.addAreaPath(areaPath);
 
-							 //------------------addIterationPath----------------------------------------------------
+							// ------------------addIterationPath----------------------------------------------------
 
-							 tfs.addIterationPath(iteration);
+							tfs.addIterationPath(iteration);
 
-							 //------------------addAssignedTo-------------------------------------------------------
+							// ------------------addAssignedTo-------------------------------------------------------
 
 							tfs.addAssignedTo(assignTo);
 
-							 //------------------addReproSteps-------------------------------------------------------
+							// ------------------addReproSteps-------------------------------------------------------
 
-							 tfs.addReproSteps(reproSteps);
+							tfs.addReproSteps(reproSteps);
 
-							 //------------------addScreenShot-------------------------------------------------------
+							// ------------------addScreenShot-------------------------------------------------------
 
 							InputStream pic = null;
 							String fullname = "";
@@ -529,12 +542,25 @@ public class SingleButtonapp {
 							if (pic != null) {
 								tfs.addDocument(completePath, takeScreenShot.filename);
 							}
-							tfs.saveWorkItem();
-							System.out.println("Work item " + tfs.newWorkItem.getID() + " successfully created");
+							int workItemId = tfs.saveWorkItem();
 
+							if (workItemId > 0) {
+
+								System.out.println("Work item " + tfs.newWorkItem.getID() + " successfully created");
+								JFrame parent = new JFrame();
+								JOptionPane.showMessageDialog(parent, "Bug Id : " + workItemId);
+								parent.setVisible(true);
+
+							} else {
+
+								JFrame parent = new JFrame();
+								JOptionPane.showMessageDialog(parent, "There was a problem while creating bug");
+								parent.setVisible(true);
+
+							}
 						} finally {
 							try {
-								
+
 								tfs.tpc.close();
 							} catch (Exception except) {
 								except.printStackTrace();
@@ -578,6 +604,12 @@ public class SingleButtonapp {
 								System.exit(1);
 							}
 						}
+						lblIcon.setVisible(false);
+				        return null;
+							    }
+							};
+							myWorker.execute();
+
 					}
 				});
 
@@ -651,13 +683,11 @@ public class SingleButtonapp {
 				System.out.println("-------Closing the thread-------");
 				for (Thread thread : setMyThread) {
 
-					System.out.println(
-							thread.getId() + " --- " + thread.getName() + " --- " + thread.getState());
+					System.out.println(thread.getId() + " --- " + thread.getName() + " --- " + thread.getState());
 					if (thread.getId() == thread_Id) {
 						System.out.println("Thread " + thread_Id + " is about to close");
 						thread.interrupt();
-						System.out.println(
-								"Thread " + thread_Id + " is intrupted : " + thread.isInterrupted());
+						System.out.println("Thread " + thread_Id + " is intrupted : " + thread.isInterrupted());
 					}
 				}
 
@@ -681,13 +711,12 @@ public class SingleButtonapp {
 			}
 
 		});
-		
+
 		d.addWindowListener(new WindowAdapter() {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
 
-				
 				// frm_main.setVisible(false);
 				d.dispose();
 
@@ -695,13 +724,11 @@ public class SingleButtonapp {
 				System.out.println("-------Closing the thread-------");
 				for (Thread thread : setMyThread) {
 
-					System.out.println(
-							thread.getId() + " --- " + thread.getName() + " --- " + thread.getState());
+					System.out.println(thread.getId() + " --- " + thread.getName() + " --- " + thread.getState());
 					if (thread.getId() == thread_Id) {
 						System.out.println("Thread " + thread_Id + " is about to close");
 						thread.interrupt();
-						System.out.println(
-								"Thread " + thread_Id + " is intrupted : " + thread.isInterrupted());
+						System.out.println("Thread " + thread_Id + " is intrupted : " + thread.isInterrupted());
 					}
 				}
 
@@ -725,8 +752,6 @@ public class SingleButtonapp {
 			}
 
 		});
-		
-		
 
 	}
 
@@ -735,6 +760,9 @@ public class SingleButtonapp {
 	// lst_appobjects.add(obj_app);
 	//
 	// }
+	public static void infoBox(String infoMessage, String titleBar) {
+		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+	}
 }
 
 class MyDialog extends JDialog {
@@ -774,4 +802,5 @@ class DummyFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setIconImages(iconImages);
 	}
+
 }
